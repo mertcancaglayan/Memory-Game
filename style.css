@@ -1,3 +1,13 @@
+@font-face {
+	font-family: "eerie";
+	src: url("assets/fonts/eerie.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: "ladies";
+	src: url("assets/fonts/ladies.ttf") format('truetype');
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -62,18 +72,47 @@ body {
 	transition: 1s ease-in-out;
 }
 
+.image-container:not(:hover) {
+	transition: 1s ease-in-out;
+}
+
 .image-container {
 	width: 70%;
 	border-radius: 10px;
 	overflow: hidden;
 	box-shadow: 10px 10px 20px 10px rgba(0, 0, 0, 0.8);
-  }
+}
 
-img {
+.categoryImg {
 	width: 100%;
 	margin: 0;
 	padding: 0;
 }
+
+.gameInfo {
+	margin: 10px auto 20px auto;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.gameTitle {
+	margin-right: 40px;
+}
+
+
+.gallery {
+    display: grid;
+	grid-template-columns: repeat(4,auto);
+	grid-gap: 10px;
+}
+
+.gallery img{
+	height: 144px;
+	width: 96px;
+	border-radius: 10px;
+  }
 
 @keyframes shake {
 	0% {
