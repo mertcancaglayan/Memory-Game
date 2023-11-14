@@ -5,7 +5,7 @@
 
 @font-face {
 	font-family: "ladies";
-	src: url("assets/fonts/ladies.ttf") format('truetype');
+	src: url("assets/fonts/ladies.ttf") format("truetype");
 }
 
 * {
@@ -19,7 +19,8 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: #0f2027; /* fallback for old browsers */
+	background: #0f2027;
+	/* fallback for old browsers */
 	background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
 	background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
 	height: 100vh;
@@ -101,18 +102,50 @@ body {
 	margin-right: 40px;
 }
 
-
 .gallery {
-    display: grid;
-	grid-template-columns: repeat(4,auto);
+	display: grid;
+	grid-template-columns: repeat(4, auto);
 	grid-gap: 10px;
 }
 
-.gallery img{
+.memory-card {
+	overflow: hidden;
+	box-shadow: #0f2027 2px 5px 3px;
+	border-radius: 10px;
 	height: 144px;
 	width: 96px;
-	border-radius: 10px;
-  }
+	position: relative;
+	transform-style: preserve-3d;
+	perspective: 1000px;
+	transition: transform 0.5s ease-in-out;
+}
+
+.memory-card.flip {
+	transform: rotateY(180deg);
+}
+
+.memory-card .front-face,
+.memory-card .back-face {
+	position: absolute;
+	width: 100%;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.memory-card .front-face {
+    transform: rotateY(0deg);
+}
+
+.memory-card .back-face {
+    transform: rotateY(180deg);
+}
+
+
+.memory-card .front-face img, 
+.memory-card .back-face img{
+	width: 100%;
+}
+
 
 @keyframes shake {
 	0% {
