@@ -4,9 +4,46 @@ const containerElement = document.querySelector(".container");
 const gallery = document.createElement("div");
 gallery.classList.add("gallery");
 
-function flipCard() {
-    this.classList.toggle("flip")
+function checkMatch() {
+	const isMatch = firstCard.querySelector(".back-face img").src === secondCard.querySelector(".back-face img").src;
 
+	if (isMatch) {
+		disableCards()
+	} else {
+		disableBoard = true;
+		
+		setTimeout(() => {
+			firstCard.classList.remove("flip");
+			secondCard.classList.remove("flip");
+
+			disableBoard = false;
+		}, 2000);
+	}
+}
+
+function disableCards() {
+	firstCard.removeEventListener("click", flipCard);
+	secondCard.removeEventListener("click", flipCard);
+}
+
+
+let hasFlippedCard = false;
+let disableBoard = false;
+let firstCard, secondCard;
+function flipCard() {
+	if (disableBoard) return;
+	if (this === firstCard) return;
+	this.classList.toggle("flip");
+
+	if (!hasFlippedCard) {
+		hasFlippedCard = true;
+		firstCard = this;
+	} else {
+		hasFlippedCard = false;
+		secondCard = this;
+
+		checkMatch();
+	}
 }
 
 function getImgNumbers(max) {
@@ -47,41 +84,38 @@ function shuffleArray(array) {
 }
 
 function generateRandomImages(category, maxImages) {
-    containerElement.appendChild(gallery);
+	containerElement.appendChild(gallery);
 
-    const imgNumbers = getImgNumbers(maxImages / 2);
-    const shuffledImgNumbers = shuffleArray([...imgNumbers, ...imgNumbers]);
+	const imgNumbers = getImgNumbers(maxImages / 2);
+	const shuffledImgNumbers = shuffleArray([...imgNumbers, ...imgNumbers]);
 
-    for (let i = 0; i < shuffledImgNumbers.length; i++) {
-        const imgSrc = `assets/images/${category}/img (${shuffledImgNumbers[i]}).jpg`;
+	for (let i = 0; i < shuffledImgNumbers.length; i++) {
+		const imgSrc = `assets/images/${category}/img (${shuffledImgNumbers[i]}).jpg`;
 
-        const card = document.createElement("div");
-        card.classList.add("memory-card");
-        const frontDiv = document.createElement("div");
-        frontDiv.classList.add("front-face");
-        const frontImg = document.createElement("img");
-        frontImg.src = "assets/images/front-face.png";
-        frontDiv.appendChild(frontImg);
+		const card = document.createElement("div");
+		card.classList.add("memory-card");
+		const frontDiv = document.createElement("div");
+		frontDiv.classList.add("front-face");
+		const frontImg = document.createElement("img");
+		frontImg.src = "assets/images/front-face.png";
+		frontDiv.appendChild(frontImg);
 
-        
-        const backDiv = document.createElement("div")
-        backDiv.classList.add("back-face");
+		const backDiv = document.createElement("div");
+		backDiv.classList.add("back-face");
 
-        const imgElement = document.createElement("img");
-        imgElement.src = imgSrc;
-        backDiv.appendChild(imgElement);
+		const imgElement = document.createElement("img");
+		imgElement.src = imgSrc;
+		backDiv.appendChild(imgElement);
 
-        card.appendChild(frontDiv);
-        card.appendChild(backDiv);
-        gallery.appendChild(card);
-    }
+		card.appendChild(frontDiv);
+		card.appendChild(backDiv);
+		gallery.appendChild(card);
+	}
 
-    let cards = document.querySelectorAll(".memory-card");
-    console.log(cards);
+	let cards = document.querySelectorAll(".memory-card");
 
-    cards.forEach(card => card.addEventListener("click", flipCard));
+	cards.forEach((card) => card.addEventListener("click", flipCard));
 }
-
 
 function generateRandomNumbers() {
 	const randomArray = [];
@@ -111,5 +145,3 @@ function startGame(category, maxImages) {
 	const gameInfo = createGameInfo(category);
 	generateRandomImages(category, maxImages);
 }
-
-
