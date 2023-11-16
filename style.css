@@ -135,19 +135,32 @@ body {
 }
 
 .memory-card .front-face {
-    transform: rotateY(0deg);
+	transform: rotateY(0deg);
 }
 
 .memory-card .back-face {
-    transform: rotateY(180deg);
+	transform: rotateY(180deg);
 }
 
-
-.memory-card .front-face img, 
-.memory-card .back-face img{
+.memory-card .front-face img,
+.memory-card .back-face img {
 	width: 100%;
 }
 
+.restartBtn {
+	display: none;
+	margin-bottom: 20px;
+	background-color: #112131;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 10px;
+	cursor: pointer;
+}
+
+.restartBtn:hover {
+	background-color: #152d47;
+}
 
 @keyframes shake {
 	0% {

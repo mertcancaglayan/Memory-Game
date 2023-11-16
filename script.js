@@ -4,14 +4,31 @@ const containerElement = document.querySelector(".container");
 const gallery = document.createElement("div");
 gallery.classList.add("gallery");
 
+const restartButton = document.createElement("button")
+restartButton.classList.add("restartBtn")
+restartButton.innerText = "Restart"
+
+let points = 0;
+let score; // Define the score element
+
 function checkMatch() {
 	const isMatch = firstCard.querySelector(".back-face img").src === secondCard.querySelector(".back-face img").src;
 
 	if (isMatch) {
-		disableCards()
+		points++;
+		score.innerText = `${points}/8`;
+
+		if (points === 8) {
+			restartButton.style.display = "flex";
+			restartButton.addEventListener("click", () => {
+				location.reload()
+			})
+		}
+
+		disableCards();
 	} else {
 		disableBoard = true;
-		
+
 		setTimeout(() => {
 			firstCard.classList.remove("flip");
 			secondCard.classList.remove("flip");
@@ -26,10 +43,10 @@ function disableCards() {
 	secondCard.removeEventListener("click", flipCard);
 }
 
-
 let hasFlippedCard = false;
 let disableBoard = false;
 let firstCard, secondCard;
+
 function flipCard() {
 	if (disableBoard) return;
 	if (this === firstCard) return;
@@ -65,12 +82,14 @@ function createGameInfo(category) {
 	gameTitle.innerText = category === "eerie" ? "Creep It Real" : "FemmeMe-Mory";
 	gameInfo.appendChild(gameTitle);
 
-	const score = document.createElement("p");
+	// Define the score element
+	score = document.createElement("p");
 	score.classList.add("score");
-	score.innerText = "10";
+	score.innerText = `${points}/8`;
 	gameInfo.appendChild(score);
 
 	containerElement.appendChild(gameInfo);
+	containerElement.appendChild(restartButton)
 
 	return gameInfo;
 }
