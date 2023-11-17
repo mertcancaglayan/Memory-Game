@@ -35,6 +35,10 @@ body {
 	height: 100vh;
 }
 
+.container #categoryChoose {
+	font-size: 1.5rem;
+}
+
 .category {
 	display: flex;
 	margin-top: 20px;
@@ -58,8 +62,6 @@ body {
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
-	font-size: 16px;
-	width: 30%;
 }
 
 .card-btn button:hover {
@@ -99,8 +101,16 @@ body {
 	width: 100%;
 }
 
-.gameTitle {
-	margin-right: 40px;
+.gameTitle:hover {
+	color: #152d47;
+}
+
+.backBtn {
+	cursor: pointer;
+}
+
+.backBtn:hover {
+	color: #152d47;
 }
 
 .gallery {
@@ -135,19 +145,32 @@ body {
 }
 
 .memory-card .front-face {
-    transform: rotateY(0deg);
+	transform: rotateY(0deg);
 }
 
 .memory-card .back-face {
-    transform: rotateY(180deg);
+	transform: rotateY(180deg);
 }
 
-
-.memory-card .front-face img, 
-.memory-card .back-face img{
+.memory-card .front-face img,
+.memory-card .back-face img {
 	width: 100%;
 }
 
+.restartBtn {
+	display: none;
+	margin-bottom: 20px;
+	background-color: #112131;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 10px;
+	cursor: pointer;
+}
+
+.restartBtn:hover {
+	background-color: #152d47;
+}
 
 @keyframes shake {
 	0% {
@@ -182,5 +205,27 @@ body {
 	}
 	100% {
 		transform: translate(0, 0);
+	}
+}
+
+@media (max-width: 700px) {
+	.categoryBtn {
+		font-size: 0.8rem;
+	}
+    .memory-card {
+        max-height: 18vw;
+        max-width: 12vw;
+    }
+	.gameInfo {
+        width: 95%;
+    }
+	.gameTitle {
+		font-size: 1.5rem;
+	}
+}
+
+@media (max-width: 500px) {
+	.gameTitle {
+		font-size: 1.2rem;
 	}
 }

@@ -4,14 +4,32 @@ const containerElement = document.querySelector(".container");
 const gallery = document.createElement("div");
 gallery.classList.add("gallery");
 
+const restartButton = document.createElement("button");
+restartButton.classList.add("restartBtn");
+restartButton.innerText = "Restart";
+
+let points = 0;
+let score;
+let currentCategory;
+
 function checkMatch() {
 	const isMatch = firstCard.querySelector(".back-face img").src === secondCard.querySelector(".back-face img").src;
 
 	if (isMatch) {
-		disableCards()
+		points++;
+		score.innerText = `${points}/8`;
+
+		if (points === 8) {
+			restartButton.style.display = "flex";
+			restartButton.addEventListener("click", () => {
+				startGame(currentCategory, 16);
+			});
+		}
+
+		disableCards();
 	} else {
 		disableBoard = true;
-		
+
 		setTimeout(() => {
 			firstCard.classList.remove("flip");
 			secondCard.classList.remove("flip");
@@ -26,10 +44,10 @@ function disableCards() {
 	secondCard.removeEventListener("click", flipCard);
 }
 
-
 let hasFlippedCard = false;
 let disableBoard = false;
 let firstCard, secondCard;
+
 function flipCard() {
 	if (disableBoard) return;
 	if (this === firstCard) return;
@@ -54,10 +72,14 @@ function createGameInfo(category) {
 	const gameInfo = document.createElement("div");
 	gameInfo.classList.add("gameInfo");
 
-	const timeInfo = document.createElement("div");
-	timeInfo.classList.add("timeInfo");
-	timeInfo.innerText = "Time: 100";
-	gameInfo.appendChild(timeInfo);
+	const backBtnElement = document.createElement("div");
+	backBtnElement.classList.add("backBtn");
+	backBtnElement.innerHTML = `<i class="fa-solid fa-backward"></i>`;
+	gameInfo.appendChild(backBtnElement);
+
+	backBtnElement.addEventListener("click", () => {
+		location.reload();
+	});
 
 	const gameTitle = document.createElement("h1");
 	gameTitle.classList.add("gameTitle");
@@ -65,12 +87,13 @@ function createGameInfo(category) {
 	gameTitle.innerText = category === "eerie" ? "Creep It Real" : "FemmeMe-Mory";
 	gameInfo.appendChild(gameTitle);
 
-	const score = document.createElement("p");
+	score = document.createElement("p");
 	score.classList.add("score");
-	score.innerText = "10";
+	score.innerText = `${points}/8`;
 	gameInfo.appendChild(score);
 
 	containerElement.appendChild(gameInfo);
+	containerElement.appendChild(restartButton);
 
 	return gameInfo;
 }
@@ -83,7 +106,7 @@ function shuffleArray(array) {
 	return array;
 }
 
-function generateRandomImages(category, maxImages) {
+function generateRandomImages(category, maxImages = 16) {
 	containerElement.appendChild(gallery);
 
 	const imgNumbers = getImgNumbers(maxImages / 2);
@@ -117,28 +140,19 @@ function generateRandomImages(category, maxImages) {
 	cards.forEach((card) => card.addEventListener("click", flipCard));
 }
 
-function generateRandomNumbers() {
-	const randomArray = [];
-
-	while (randomArray.length < 16) {
-		const randomNum = Math.floor(Math.random() * 99) + 1;
-		if (!randomArray.includes(randomNum)) {
-			randomArray.push(randomNum);
-		}
-	}
-
-	return randomArray;
-}
-
 eerieBtnElement.addEventListener("click", () => {
-	startGame("eerie", 16);
+	startGame("eerie");
 });
 
 ladiesBtnElement.addEventListener("click", () => {
-	startGame("ladies", 16);
+	startGame("ladies");
 });
 
 function startGame(category, maxImages) {
+	currentCategory = category;
+	points = 0;
+	restartButton.style.display = "none"
+
 	containerElement.innerHTML = "";
 	gallery.innerHTML = "";
 
