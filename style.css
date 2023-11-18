@@ -132,6 +132,10 @@ body {
 	transform: rotateY(180deg);
 }
 
+.memory-card:active {
+	scale: 0.95;
+}
+
 .memory-card .front-face,
 .memory-card .back-face {
 	position: absolute;
